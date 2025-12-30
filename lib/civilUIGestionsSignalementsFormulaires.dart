@@ -7,7 +7,7 @@ import 'dart:io';
 
 //variables globales
 
-XFile? image;
+//XFile? image;
 
 // XFile : Pour Stocker l'image sur Plusieurs plateformes
 // mais finalement nous prendrons File
@@ -16,8 +16,8 @@ XFile? image;
 
 class FormSignalement extends StatefulWidget {
   final int? idUser;
-
-  const FormSignalement({super.key, this.idUser});
+  XFile? image = null;
+  FormSignalement({super.key, this.idUser});
 
   @override
   State<FormSignalement> createState() => _FormSignalementState();
@@ -73,9 +73,16 @@ class _FormSignalementState extends State<FormSignalement> {
                 s.ville = ville.text;
                 s.quartier = quartier.text;
                 s.date = DateTime.now();
-                s.photo = image!.path;
+                if (widget.image == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Veuillez prendre une photo !")),
+                  );
+                } else {
+                  s.photo = widget.image!.path;
+                }
+
                 s.esttraite = true;
-                image = null;
+                //image = null;
                 String date = "${s.date}";
 
                 if ((region.text.isEmpty) ||
@@ -97,23 +104,29 @@ class _FormSignalementState extends State<FormSignalement> {
                   Navigator.pop(context);
                 } else {
                   var lienimage = Uri.parse(
-                    "http://10.150.93.241:80/serverphpmballit/upload.php",
+                    "http://192.168.66.9:80/serverphpmballit/upload.php",
                   );
 
-                  String? chemin = s.photo;
+                  String? chemin = "perdu !";
                   var reponseimage = await http.post(
                     lienimage,
-                    body: {'iduser': widget.idUser, 'photo': File(image!.path)},
+                    body: {
+                      'iduser': "${widget.idUser}",
+                      'image': base64Encode(
+                        await File(widget.image!.path).readAsBytes(),
+                      ),
+                    },
                   );
+
                   Map<String, dynamic> logresponseimage = {};
-                  if (reponseimage.statusCode == 200) {
+                  if (true) {
                     logresponseimage = jsonDecode(reponseimage.body);
                     if (logresponseimage['statut'] == "success") {
-                      chemin = logresponseimage['url'];
+                      chemin = logresponseimage['chemin'];
                     }
                   }
                   var lien = Uri.parse(
-                    "http://10.150.93.241:80/serverphpmballit/sendsignalements.php",
+                    "http://192.168.66.9:80/serverphpmballit/sendsignalements.php",
                   );
                   if (widget.idUser == null) {
                     print("NULL object");
@@ -222,7 +235,7 @@ class _FormSignalementState extends State<FormSignalement> {
   }
 
   ButtonStyle? ButtoncameraStyle() {
-    if (image != null) {
+    if (widget.image != null) {
       return OutlinedButton.styleFrom(
         minimumSize: Size(150, 200),
         backgroundColor: Colors.green.shade100,
@@ -245,8 +258,8 @@ class _FormSignalementState extends State<FormSignalement> {
   // Il faut commencer à taper pour que ça fonctionne
 
   Widget? Buttoncamerabackground() {
-    if (image != null) {
-      File imagefile = File(image!.path);
+    if (widget.image != null) {
+      File imagefile = File(widget.image!.path);
       // Conversion du XFile en File
       // pour faciliter l'affichage
       return Image.file(imagefile, fit: BoxFit.cover);
@@ -256,7 +269,7 @@ class _FormSignalementState extends State<FormSignalement> {
   }
 
   Decoration? Buttoncameraborder() {
-    if (image != null) {
+    if (widget.image != null) {
       return BoxDecoration(
         border: Border.symmetric(
           horizontal: BorderSide.none,
@@ -324,7 +337,14 @@ class _FormSignalementState extends State<FormSignalement> {
               decoration: Buttoncameraborder(),
               child: OutlinedButton(
                 onPressed: () async {
-                  image = await _picker.pickImage(source: ImageSource.camera);
+                  var picket = await _picker.pickImage(
+                    source: ImageSource.camera,
+                  );
+                  if (picket != null) {
+                    setState(() {
+                      widget.image = picket;
+                    });
+                  }
                 },
                 style: ButtoncameraStyle(),
                 child: Buttoncamerabackground(),
@@ -440,7 +460,7 @@ class _FormSignalementState extends State<FormSignalement> {
     // voilà
     /*var telephonenumer = await http.get(
       Uri.parse(
-        "http://10.150.93.241:80/serverphpmballit/sendsignalements.php",
+        "http://192.168.66.9:80/serverphpmballit/sendsignalements.php",
       ),
     );*/
     // L
@@ -454,7 +474,7 @@ class _FormSignalementState extends State<FormSignalement> {
     //est passée . code = 200 / protocoles http
     var log = await http.get(
       Uri.parse(
-        "http://10.150.93.241:80/serverphpmballit/sendsignalements.php",
+        "http://192.168.66.9:80/serverphpmballit/sendsignalements.php",
       ),
     );
     if (log.statusCode == 200) {
@@ -476,7 +496,7 @@ class _FormSignalementState extends State<FormSignalement> {
         // Uri.parse permet de récupérer URL et de l'enregistrer sous forme
         // de map pour une meilleur flexibilité
         Uri.parse(
-          "http://10.150.93.241:80/serverphpmballit/sendsignalements.php",
+          "http://192.168.66.9:80/serverphpmballit/sendsignalements.php",
         ),
         // Dans la communication http,
         // il est obligatoires pour le

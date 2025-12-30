@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 //import 'package:mballit1/PageAccueil1.dart';
 //import 'package:mbalitt1/MballitLoginPage.dart';
 //import 'package:mbalitt1/MballitLogo.dart';
-import 'allSubscribeAccount.dart';
+import 'allLoginAccount.dart';
 //import 'allLoginAccount.dart';
 import 'package:mballit1/civilUI_Signalements.dart';
 
@@ -15,10 +15,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: AllSubscribePage(),
-    );
+    return MaterialApp(debugShowCheckedModeBanner: false, home: AllLoginPage());
   }
 }
 

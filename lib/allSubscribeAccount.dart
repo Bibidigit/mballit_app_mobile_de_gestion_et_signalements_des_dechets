@@ -238,7 +238,7 @@ class _AllSubscribePageState extends State<AllSubscribePage> {
                           return; // Ne pas continuer si les champs sont vides
                         }
                         var lien = Uri.parse(
-                          "http://10.150.93.241:80/serverphpmballit/register.php",
+                          "http://192.168.66.9:80/serverphpmballit/register.php",
                         );
                         var reponse = await http.post(
                           lien,
