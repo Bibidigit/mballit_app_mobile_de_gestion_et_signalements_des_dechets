@@ -104,7 +104,7 @@ class _FormSignalementState extends State<FormSignalement> {
                   Navigator.pop(context);
                 } else {
                   var lienimage = Uri.parse(
-                    "http://192.168.66.9:80/serverphpmballit/upload.php",
+                    "http://192.168.95.9:80/serverphpmballit/upload.php",
                   );
 
                   String? chemin = "perdu !";
@@ -126,7 +126,7 @@ class _FormSignalementState extends State<FormSignalement> {
                     }
                   }
                   var lien = Uri.parse(
-                    "http://192.168.66.9:80/serverphpmballit/sendsignalements.php",
+                    "http://192.168.95.9:80/serverphpmballit/sendsignalements.php",
                   );
                   if (widget.idUser == null) {
                     print("NULL object");
@@ -300,7 +300,7 @@ class _FormSignalementState extends State<FormSignalement> {
           children: [
             Icon(Icons.lens_blur_outlined, size: 40, color: Colors.white),
             Text(
-              "\tMbàLLit",
+              "\tmbaLLit",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18,
@@ -460,7 +460,7 @@ class _FormSignalementState extends State<FormSignalement> {
     // voilà
     /*var telephonenumer = await http.get(
       Uri.parse(
-        "http://192.168.66.9:80/serverphpmballit/sendsignalements.php",
+        "http://192.168.95.9:80/serverphpmballit/sendsignalements.php",
       ),
     );*/
     // L
@@ -474,7 +474,7 @@ class _FormSignalementState extends State<FormSignalement> {
     //est passée . code = 200 / protocoles http
     var log = await http.get(
       Uri.parse(
-        "http://192.168.66.9:80/serverphpmballit/sendsignalements.php",
+        "http://192.168.95.9:80/serverphpmballit/sendsignalements.php",
       ),
     );
     if (log.statusCode == 200) {
@@ -496,7 +496,7 @@ class _FormSignalementState extends State<FormSignalement> {
         // Uri.parse permet de récupérer URL et de l'enregistrer sous forme
         // de map pour une meilleur flexibilité
         Uri.parse(
-          "http://192.168.66.9:80/serverphpmballit/sendsignalements.php",
+          "http://192.168.95.9:80/serverphpmballit/sendsignalements.php",
         ),
         // Dans la communication http,
         // il est obligatoires pour le
