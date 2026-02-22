@@ -1,117 +1,187 @@
-Mballit - Application Mobile de Gestion et Signalements des Déchets
 
-Mballit est une application mobile citoyenne permettant de signaler facilement les dépôts sauvages, les poubelles pleines ou tout autre problème lié à la gestion des déchets urbains. L'objectif est de centraliser les alertes pour permettre aux services compétents d'intervenir plus efficacement.
+# Mballit - Application Mobile de Gestion et Signalements des Déchets
 
-Fonctionnalités Principales
+Mballit est une application mobile citoyenne permettant de signaler facilement les dépôts sauvages, les poubelles pleines ou tout autre problème lié à la gestion des déchets urbains.
 
-Authentification sécurisée : Création de compte et connexion via numéro de téléphone et code PIN.
+L'objectif est de centraliser les alertes pour permettre aux services compétents d'intervenir plus efficacement.
 
-Signalement sur le terrain : Formulaire interactif permettant de prendre une photo du déchet directement depuis l'application.
+---
 
-Localisation détaillée : Saisie de la Région, de la Ville et du Quartier avec une description du problème.
+## Fonctionnalités Principales
 
-Suivi en temps réel : Tableau de bord affichant l'historique des requêtes de l'utilisateur avec un code visuel pour l'état du signalement (Traité / En attente).
+### Authentification sécurisée
 
-(Insérer ici des captures d'écran de votre application : Accueil, Formulaire, Liste des signalements)
+Création de compte et connexion via numéro de téléphone et code PIN.
 
-Stack Technique
+### Signalement sur le terrain
 
-Frontend (Application Mobile) :
+Formulaire interactif permettant de prendre une photo du déchet directement depuis l'application.
 
-Framework : Flutter (SDK) / Langage : Dart
+### Localisation détaillée
 
-Packages principaux : http (requêtes réseau asynchrones), image_picker (accès à la caméra matérielle).
+Saisie de la Région, de la Ville et du Quartier avec une description du problème.
 
-Backend (API & Serveur) :
+### Suivi en temps réel
 
-Langage : PHP
+Tableau de bord affichant l'historique des requêtes de l'utilisateur avec un code visuel pour l'état du signalement (Traité / En attente).
 
-Base de données : MySQL (requêtes préparées via mysqli)
+---
 
-Format d'échange de données : JSON
+## Captures d’écran
 
-Architecture de l'API (Backend PHP)
+*(Insérer ici des captures d'écran de votre application : Accueil, Formulaire, Liste des signalements)*
 
-Afin d'assurer la communication entre l'application mobile et la base de données, nous avons développé une API RESTful sur mesure en PHP. Tous les échanges se font au format JSON pour garantir une compatibilité parfaite avec Flutter.
+---
 
-connexionBD.php : Script utilitaire centralisant la connexion au serveur MySQL et la sélection de la base de données (mballitserver). Il permet de mutualiser le code et de sécuriser les accès.
+## Stack Technique
 
-register.php et login.php : Gestion de l'authentification. Ces scripts utilisent des requêtes SQL préparées (mysqli_prepare) pour prévenir les injections SQL. Ils vérifient l'existence des utilisateurs, créent de nouveaux profils et renvoient les identifiants de session (iduser, pseudo, role) à l'application.
+### Frontend (Application Mobile)
 
-upload.php : Ce script est responsable de la gestion des images. Il réceptionne l'image encodée en Base64 depuis Flutter, la décode en fichier binaire, lui attribue un nom unique (uniqid()) pour éviter les conflits, et la stocke physiquement dans le dossier /mballituploads/. Il renvoie ensuite l'URL complète de l'image pour affichage.
+- **Framework :** Flutter (SDK)  
+- **Langage :** Dart  
+- **Packages principaux :**
+  - `http` (requêtes réseau asynchrones)
+  - `image_picker` (accès à la caméra matérielle)
 
-sendsignalements.php : Réceptionne les données textuelles (localisation, description) et le chemin de la photo associés à un signalement, puis les insère de manière sécurisée dans la table signalements.
+### Backend (API & Serveur)
 
-receivsignalements.php : Permet à l'application de récupérer l'historique des signalements d'un utilisateur spécifique. Les résultats de la base de données sont extraits et encodés dans un tableau JSON structuré.
+- **Langage :** PHP  
+- **Base de données :** MySQL (requêtes préparées via `mysqli`)  
+- **Format d'échange de données :** JSON  
 
-Installation et Configuration
+---
 
-Pour faire tourner ce projet localement, vous aurez besoin de configurer à la fois le serveur PHP et l'environnement Flutter.
+## Architecture de l'API (Backend PHP)
 
-1. Prérequis
+Afin d'assurer la communication entre l'application mobile et la base de données, une API RESTful sur mesure a été développée en PHP. Tous les échanges se font au format JSON pour garantir une compatibilité parfaite avec Flutter.
 
-Le SDK Flutter installé sur votre machine.
+### connexionBD.php
 
-Un environnement serveur local (Laragon a été utilisé pour ce projet, mais XAMPP, WAMP ou LAMP fonctionnent également).
+Script utilitaire centralisant la connexion au serveur MySQL et la sélection de la base de données `mballitserver`.  
+Il permet de mutualiser le code et de sécuriser les accès.
 
-Un émulateur Android/iOS ou un appareil physique branché en mode débogage.
+### register.php et login.php
 
-2. Configuration du Backend (Base de données et API)
+Gestion de l'authentification.  
+Ces scripts utilisent des requêtes SQL préparées (`mysqli_prepare`) pour prévenir les injections SQL.  
+Ils vérifient l'existence des utilisateurs, créent de nouveaux profils et renvoient les identifiants de session (`iduser`, `pseudo`, `role`) à l'application.
 
-Clonez ce dépôt sur votre machine :
+### upload.php
 
-git clone [https://github.com/Bibidigit/mballit_app_mobile_de_gestion_et_signalements_des_dechets.git](https://github.com/Bibidigit/mballit_app_mobile_de_gestion_et_signalements_des_dechets.git)
+Ce script est responsable de la gestion des images :
 
+- Réception de l'image encodée en Base64 depuis Flutter  
+- Décodage en fichier binaire  
+- Attribution d’un nom unique (`uniqid()`)  
+- Stockage dans le dossier `/mballituploads/`  
+- Renvoi de l'URL complète de l'image pour affichage  
 
+### sendsignalements.php
 
-Copiez le dossier contenant les scripts PHP dans le répertoire public de votre serveur local (ex: le dossier www/ pour Laragon/WAMP ou htdocs/ pour XAMPP).
+Réceptionne les données textuelles (localisation, description) et le chemin de la photo associés à un signalement, puis les insère de manière sécurisée dans la table `signalements`.
 
-Importez votre modèle de données SQL dans phpMyAdmin (ou HeidiSQL via Laragon) pour créer la base mballitserver ainsi que les tables users et signalements.
+### receivsignalements.php
 
-Créez un dossier nommé mballituploads à la racine de vos scripts PHP pour permettre la sauvegarde physique des images envoyées par l'application. Assurez-vous que ce dossier possède les droits d'écriture.
+Permet à l'application de récupérer l'historique des signalements d'un utilisateur spécifique.  
+Les résultats de la base de données sont extraits et encodés dans un tableau JSON structuré.
 
-3. Configuration de l'Application Mobile (Frontend)
+---
 
-Important : L'application communique avec le serveur via des requêtes HTTP. Vous devez mettre à jour l'adresse IP dans le code source pour qu'elle corresponde à celle de votre serveur local.
+## Installation et Configuration
 
-Ouvrez le projet dans votre IDE (Visual Studio Code, Android Studio...).
+Pour faire fonctionner ce projet localement, il est nécessaire de configurer à la fois le serveur PHP et l'environnement Flutter.
 
-Cherchez toutes les occurrences de l'adresse IP (ex: http://192.168.95.9:80) dans les fichiers du dossier lib/ (notamment allLoginAccount.dart, allSubscribeAccount.dart, civilUIGestionsSignalementsFormulaires.dart, civilUI_Signalements.dart).
+### 1. Prérequis
 
-Remplacez cette adresse par l'adresse IP locale de votre machine (IPv4 sur votre réseau Wi-Fi).
+- SDK Flutter installé sur votre machine  
+- Environnement serveur local (Laragon, XAMPP, WAMP ou LAMP)  
+- Émulateur Android/iOS ou appareil physique branché en mode débogage  
+
+---
+
+### 2. Configuration du Backend (Base de données et API)
+
+Clonez le dépôt sur votre machine :
+
+```bash
+git clone https://github.com/Bibidigit/mballit_app_mobile_de_gestion_et_signalements_des_dechets.git
+````
+
+1. Copiez le dossier contenant les scripts PHP dans le répertoire public de votre serveur local :
+
+   * `www/` (Laragon/WAMP)
+   * `htdocs/` (XAMPP)
+
+2. Importez votre modèle de données SQL dans phpMyAdmin (ou HeidiSQL via Laragon) afin de créer :
+
+   * La base de données `mballitserver`
+   * Les tables `users` et `signalements`
+
+3. Créez un dossier nommé :
+
+```bash
+mballituploads/
+```
+
+à la racine de vos scripts PHP pour permettre la sauvegarde physique des images envoyées par l'application.
+Assurez-vous que ce dossier possède les droits d'écriture.
+
+---
+
+### 3. Configuration de l'Application Mobile (Frontend)
+
+Important : L'application communique avec le serveur via des requêtes HTTP.
+Vous devez mettre à jour l'adresse IP dans le code source pour qu'elle corresponde à celle de votre serveur local.
+
+1. Ouvrez le projet dans votre IDE (Visual Studio Code, Android Studio, etc.).
+2. Recherchez toutes les occurrences de l'adresse IP (exemple : `http://192.168.95.9:80`) dans les fichiers du dossier `lib/` :
+
+   * `allLoginAccount.dart`
+   * `allSubscribeAccount.dart`
+   * `civilUIGestionsSignalementsFormulaires.dart`
+   * `civilUI_Signalements.dart`
+3. Remplacez cette adresse par l'adresse IP locale de votre machine (IPv4 sur votre réseau Wi-Fi).
 
 Installez les dépendances du projet :
 
+```bash
 flutter pub get
-
-
+```
 
 Lancez l'application :
 
+```bash
 flutter run
+```
 
+---
 
+## Architecture du Projet
 
-Architecture du Projet
-
+```
 mballit/
-├── android/            # Configuration spécifique Android
-├── ios/                # Configuration spécifique iOS
-├── lib/                # Code source de l'application Flutter (Front-End)
-│   ├── Classe_des_Signalements.dart   # Modèle objet
-│   ├── Classe_des_Utilisateurs.dart   # Modèle objet
-│   ├── allLoginAccount.dart           # Interface de connexion
-│   ├── allSubscribeAccount.dart       # Interface d'inscription
-│   ├── civilUIGestionsSignalementsFormulaires.dart # Formulaire & Caméra
-│   └── civilUI_Signalements.dart      # Liste et suivi des requêtes
-├── serverphpmballit/   # Code source de l'API PHP (Back-End)
+├── android/            
+├── ios/                
+├── lib/                
+│   ├── Classe_des_Signalements.dart   
+│   ├── Classe_des_Utilisateurs.dart   
+│   ├── allLoginAccount.dart           
+│   ├── allSubscribeAccount.dart       
+│   ├── civilUIGestionsSignalementsFormulaires.dart 
+│   └── civilUI_Signalements.dart      
+├── serverphpmballit/   
 │   ├── connexionBD.php
 │   ├── login.php
 │   ├── register.php
 │   ├── receivsignalements.php
 │   ├── sendsignalements.php
 │   └── upload.php
-└── pubspec.yaml        # Fichier de configuration des dépendances Flutter
+└── pubspec.yaml        
+```
 
+---
 
+## Équipe du Projet
+
+Ce projet a été réalisé dans le cadre d'un projet d'études par :
 
