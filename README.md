@@ -27,9 +27,6 @@ Tableau de bord affichant l'historique des requêtes de l'utilisateur avec un co
 
 ---
 
-## Captures d’écran
-
-*(Insérer ici des captures d'écran de votre application : Accueil, Formulaire, Liste des signalements)*
 
 ---
 
@@ -183,5 +180,5 @@ mballit/
 
 ## Équipe du Projet
 
-Ce projet a été réalisé dans le cadre d'un projet d'études par :
+Ce projet a été réalisé dans le cadre d'un projet d'études par 2 étudiants en informatique
 
