@@ -5,7 +5,6 @@ Mballit est une application mobile citoyenne permettant de signaler facilement l
 
 L'objectif est de centraliser les alertes pour permettre aux services compétents d'intervenir plus efficacement.
 
----
 
 ## Fonctionnalités Principales
 
@@ -25,10 +24,6 @@ Saisie de la Région, de la Ville et du Quartier avec une description du problè
 
 Tableau de bord affichant l'historique des requêtes de l'utilisateur avec un code visuel pour l'état du signalement (Traité / En attente).
 
----
-
-
----
 
 ## Stack Technique
 
@@ -46,7 +41,7 @@ Tableau de bord affichant l'historique des requêtes de l'utilisateur avec un co
 - **Base de données :** MySQL (requêtes préparées via `mysqli`)  
 - **Format d'échange de données :** JSON  
 
----
+
 
 ## Architecture de l'API (Backend PHP)
 
@@ -82,7 +77,7 @@ Réceptionne les données textuelles (localisation, description) et le chemin de
 Permet à l'application de récupérer l'historique des signalements d'un utilisateur spécifique.  
 Les résultats de la base de données sont extraits et encodés dans un tableau JSON structuré.
 
----
+
 
 ## Installation et Configuration
 
@@ -94,7 +89,7 @@ Pour faire fonctionner ce projet localement, il est nécessaire de configurer à
 - Environnement serveur local (Laragon, XAMPP, WAMP ou LAMP)  
 - Émulateur Android/iOS ou appareil physique branché en mode débogage  
 
----
+
 
 ### 2. Configuration du Backend (Base de données et API)
 
@@ -151,7 +146,7 @@ Lancez l'application :
 flutter run
 ```
 
----
+
 
 ## Architecture du Projet
 
@@ -176,7 +171,7 @@ mballit/
 └── pubspec.yaml        
 ```
 
----
+
 
 ## Équipe du Projet
 
